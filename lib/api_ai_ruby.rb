@@ -1,4 +1,5 @@
 # coding: utf-8
+require "api_ai_ruby/api_qlient"
 
 class ApiAiRuby
   attr_accessor :access_token, :subscription_key, :lang
