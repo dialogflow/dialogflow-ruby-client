@@ -3,7 +3,7 @@ require 'uri'
 require 'json'
 
 class ApiAiRuby
-  class ApiClient
+  class Client
     def initialize(obj)
       @properties = obj
       uri = URI.parse(BASE_URL)
