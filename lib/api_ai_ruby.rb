@@ -1,5 +1,5 @@
 # coding: utf-8
-require "api_ai_ruby/api_qlient"
+require "api_ai_ruby/client"
 
 class ApiAiRuby
   attr_accessor :access_token, :subscription_key, :lang
@@ -10,7 +10,7 @@ class ApiAiRuby
       instance_variable_set("@#{key}", value)
     end
     yield(self) if block_given?
-    @client = ApiClient.new(self)
+    @client = Client.new(self)
   end
 
   def query(str)
