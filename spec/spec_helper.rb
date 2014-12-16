@@ -1,2 +1,1 @@
-# coding: utf-8
-require 'api-ai-ruby'
+require 'api_ai_ruby'

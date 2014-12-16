@@ -17,8 +17,7 @@ class ApiAiRuby
     end
   
     def query(str)
-      payload = {:q => str, :lang => @properties.lang}.to_json
-      @req.body = payload
+      @req.body = {:q => str, :lang => @properties.lang}.to_json
       res = @https.request @req
       JSON.parse(res.body, {:symbolize_names => true})
     end
