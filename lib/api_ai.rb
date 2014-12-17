@@ -1,5 +1,5 @@
 # coding: utf-8
-require "api_ai_ruby/client"
+require "api_ai/client"
 
 class ApiAi
   attr_accessor :access_token, :subscription_key, :lang
@@ -18,4 +18,4 @@ class ApiAi
   end
 end
 
-require "api_ai_ruby/version"
+require "api_ai/version"

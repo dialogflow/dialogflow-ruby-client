@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    api_ai_ruby (0.0.1)
+    apiai (0.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -25,7 +25,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  api_ai_ruby!
+  apiai!
   bundler (~> 1.7)
   rake (~> 10.0)
   rspec

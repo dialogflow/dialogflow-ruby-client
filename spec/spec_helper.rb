@@ -1,1 +1,1 @@
-require 'api_ai_ruby'
+require 'api_ai'
