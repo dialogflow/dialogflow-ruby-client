@@ -2,7 +2,7 @@ require 'net/http'
 require 'uri'
 require 'json'
 
-class ApiAiRuby
+class ApiAi
   class Client
     def initialize(obj)
       @properties = obj

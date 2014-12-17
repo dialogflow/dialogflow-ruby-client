@@ -4,8 +4,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'api_ai_ruby/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "api_ai_ruby"
-  spec.version       = ApiAiRuby::VERSION
+  spec.name          = "apiai"
+  spec.version       = ApiAi::VERSION
   spec.authors       = ["shrimp78"]
   spec.email         = ["yoshiaki@speaktoit.com"]
   spec.summary       = %q{Wrapper of API.AI.}

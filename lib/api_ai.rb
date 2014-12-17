@@ -1,7 +1,7 @@
 # coding: utf-8
 require "api_ai_ruby/client"
 
-class ApiAiRuby
+class ApiAi
   attr_accessor :access_token, :subscription_key, :lang
   BASE_URL = 'https://api.api.ai/v1/query/'
 
