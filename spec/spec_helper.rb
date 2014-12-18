@@ -1,1 +1,1 @@
-require 'api_ai'
+require 'apiai'
