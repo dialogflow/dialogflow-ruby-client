@@ -1,16 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'api-ai-ruby/version'
+require 'apiai/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "api-ai-ruby"
-  spec.version       = GemSamplePruby::VERSION
-  spec.authors       = ["TODO: put author names"]
-  spec.email         = ["TODO: put Email addresses"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.name          = "apiai"
+  spec.version       = ApiAi::VERSION
+  spec.authors       = ["shrimp78"]
+  spec.email         = ["yoshiaki@speaktoit.com"]
+  spec.summary       = %q{Wrapper of API.AI.}
+  spec.description   = %q{Connect API.AI without effort.}
+  spec.homepage      = "https://github.com/api-ai/api-ai-ruby"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rspec"
 end
