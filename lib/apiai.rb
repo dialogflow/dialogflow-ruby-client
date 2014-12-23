@@ -1,5 +1,7 @@
 # coding: utf-8
-require "apiai/client"
+require 'net/http'
+require 'uri'
+require 'json'
 
 class ApiAi
   attr_accessor :access_token, :subscription_key,
@@ -11,20 +13,33 @@ class ApiAi
       instance_variable_set("@#{key}", value)
     end
     yield(self) if block_given?
-    @client = Client.new(self)
+    init_http_client
   end
 
-  def query(str)
-    @client.query str
+  def query(str, opts = {})
+    data = { q: str}
+    data.merge!(opts) if opts
+    @req.body = data.to_json
+    res = @https.request @req
+    JSON.parse(res.body, {:symbolize_names => true})
   end
+
+  def req
+    @req
+  end
+
+  private
+  def init_http_client
+    uri = URI.parse(BASE_URL)
+    @https = Net::HTTP.new(uri.host, uri.port)
+    @https.use_ssl = true
+    @req = Net::HTTP::Post.new(uri.request_uri)
+    @req["Authorization"] = "Bearer #{self.access_token}"
+    @req["ocp-apim-subscription-key"] = self.subscription_key
+    @req["Content-Type"] = "application/json"
+    @req
+  end  
 end
 
-apiai = ApiAi.new do |config|
-  config.access_token = "d61f785bb39f42a2b1f6830e17ad3dcf"
-  config.subscription_key = "6b5639dd-ffb8-4e21-8519-a2594dafc70e"
-  config.lang = "en"
-end
-res = apiai.query("play beatles")
-puts res
 
 require "apiai/version"

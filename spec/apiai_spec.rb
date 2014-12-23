@@ -1,13 +1,13 @@
 require 'spec_helper'
 require 'yaml'
+require 'json'
 
 describe ApiAi do
   before(:all) do
-    settings = YAML.load_file('.apikey.yml')
+    @settings = YAML.load_file('.apikey.yml')
     @apiai = ApiAi.new do |config|
-      config.access_token = settings["access_token"]
-      config.subscription_key = settings["subscription_key"]
-      config.lang = settings["lang"]
+      config.access_token = @settings["access_token"]
+      config.subscription_key = @settings["subscription_key"]
     end
   end
 
@@ -21,12 +21,16 @@ describe ApiAi do
     end
   end
 
-  describe "call api" do
-    it 'access api.ai' do
-      res = @apiai.query("play beatles")
-      puts res
-      expect(res).not_to be_nil
+  describe "client instance" do
+    it 'can access api.ai' do
+      res = @apiai.query("AAA")
+      expect(res[:status][:code]).to eq 200
+    end
+
+    it 'has option parameter' do
+      opts = { lang: "en", timezone: "Asia/Tokyo"}
+      @apiai.query("AAA", opts)
+      expect(JSON.parse(@apiai.req.body)).to include("lang" => "en")
     end
   end
-
 end
