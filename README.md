@@ -7,7 +7,7 @@ A Ruby SDK to the https://api.ai natural language processing service.
 
 ## Basic Usage
 
-Just pass correct credentials to ApiAiRuby::Client constructor
+Just pass correct credentials to **ApiAiRuby::Client** constructor
 
 ```ruby
 client = ApiAiRuby::Client.new(
@@ -52,11 +52,11 @@ Example answer:
 }
 ```
 
-voice_request and text_request methods returns symbolized https://api.ai response. Structure of response can be found here (https://docs.api.ai/docs/query#response)
+**voice_request** and **text_request** methods returns symbolized https://api.ai response. Structure of response can be found at https://docs.api.ai/docs/query#response.
 
 ## Advanced usage
 
-During client instantination you can additionally set parameters like api url, request language and version (more info at https://docs.api.ai/docs/versioning, https://docs.api.ai/docs/languages)
+During client instantiating you can additionally set parameters like **api url**, request **language** and **version** (more info at https://docs.api.ai/docs/versioning, https://docs.api.ai/docs/languages)
 
 ```ruby
 ApiAiRuby::Client.new(
@@ -68,15 +68,16 @@ ApiAiRuby::Client.new(
 )
 ```
 
-And you also can send additional data to server during request, use second parameter of text_request and voice_request methods to do that
+And you also can send additional data to server during request, use second parameter of **text_request** and **voice_request** methods to do that
 
 ```ruby
     response = client.text_request 'Hello', :contexts => ['firstContext'], :resetContexts => true
     response = client.voice_request 'file', :timezone => "America/New_York"
 ```
-More information about possible parameters cand be found at https://docs.api.ai/docs/query page
+More information about possible parameters can be found at https://docs.api.ai/docs/query page
 
-
+#Error handling
+**ApiAiRuby::Client** currently able to raise two kind of errors: **ApiAiRuby::ClientError** (due to configuration mismatch) and **ApiAiRuby::RequestError** in case of something goes wrong during request. For both kind of errors you can get **error.message** (as usual) and **ApiAiRuby::RequestError** can additionally give you code of server error (you can get it with **error.code**)
 
 
 
