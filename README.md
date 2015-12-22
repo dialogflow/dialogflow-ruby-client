@@ -68,11 +68,11 @@ ApiAiRuby::Client.new(
 )
 ```
 
-And you also can send additional data to server during request, use second parameter of text_request and voice_request methods for that
+And you also can send additional data to server during request, use second parameter of text_request and voice_request methods to do that
 
 ```ruby
     response = client.text_request 'Hello', :contexts => ['firstContext'], :resetContexts => true
-    response = client.voice_request 'Hello', :timezone => "America/New_York"
+    response = client.voice_request 'file', :timezone => "America/New_York"
 ```
 More information about possible parameters cand be found at https://docs.api.ai/docs/query page
 
