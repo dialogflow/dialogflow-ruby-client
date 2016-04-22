@@ -1,7 +1,7 @@
 require 'helper'
 
 describe 'api' do
-  let (:client) { ApiAiRuby::Client.new(:client_access_token => '3485a96fb27744db83e78b8c4bc9e7b7', :subscription_key => 'cb9693af-85ce-4fbf-844a-5563722fc27f')}
+  let (:client) { ApiAiRuby::Client.new(:client_access_token => '3485a96fb27744db83e78b8c4bc9e7b7')}
 
   it 'should return response' do
     response = client.text_request 'Hello'
@@ -28,7 +28,7 @@ describe 'api' do
   end
 
   it 'should response with error on wrong credentials' do
-    client = ApiAiRuby::Client.new(subscription_key: 'SK', client_access_token: 'CS')
+    client = ApiAiRuby::Client.new(client_access_token: 'CS')
     expect {client.text_request}.to raise_error(ApiAiRuby::RequestError)
   end
 

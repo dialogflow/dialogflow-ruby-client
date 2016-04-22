@@ -35,7 +35,6 @@ module ApiAiRuby
     def credentials
       {
           client_access_token: client_access_token,
-          subscription_key: subscription_key
       }
     end
 

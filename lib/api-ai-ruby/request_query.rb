@@ -18,7 +18,6 @@ module ApiAiRuby
       @options = options
       @headers = {
           'Authorization': 'Bearer ' + client.client_access_token,
-          'ocp-apim-subscription-key': 'Bearer ' + client.client_access_token
       }
     end
 
