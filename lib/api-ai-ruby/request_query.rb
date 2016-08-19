@@ -17,7 +17,7 @@ module ApiAiRuby
       options[:lang] = client.api_lang
       @options = options
       @headers = {
-          'Authorization': 'Bearer ' + client.client_access_token,
+          Authorization: 'Bearer ' + client.client_access_token,
       }
     end
 
