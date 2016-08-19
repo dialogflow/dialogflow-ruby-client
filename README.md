@@ -78,5 +78,6 @@ More information about possible parameters can be found at https://docs.api.ai/d
 **ApiAiRuby::Client** currently able to raise two kind of errors: **ApiAiRuby::ClientError** (due to configuration mismatch) and **ApiAiRuby::RequestError** in case of something goes wrong during request. For both kind of errors you can get **error.message** (as usual) and **ApiAiRuby::RequestError** can additionally give you code of server error (you can get it with **error.code**)
 
 
+#Changelog
 
-
+1.1.2 - fixed compatibility with ruby version less then 2.1.6
