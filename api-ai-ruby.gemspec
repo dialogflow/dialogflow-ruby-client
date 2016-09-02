@@ -18,9 +18,10 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
+  spec.required_ruby_version = '~> 2.0'
+
   spec.add_development_dependency 'bundler', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_dependency 'http', '~> 0.9.4'
-  spec.add_dependency 'http-form_data', '~> 1.0'
 
 end
