@@ -80,4 +80,5 @@ More information about possible parameters can be found at https://docs.api.ai/d
 
 #Changelog
 
+1.1.3 - fixed non-correctly serialized parameters in new contexts during query send process
 1.1.2 - fixed compatibility with ruby version less then 2.1.6

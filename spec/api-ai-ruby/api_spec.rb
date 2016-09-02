@@ -35,4 +35,13 @@ describe 'api' do
   it 'should send voiceData to API' do
     expect(client.voice_request(File.new(fixture_path + '/hello.wav'))[:result][:resolvedQuery]).to eq 'hello'
   end
+
+  it 'should correctly set contexts with parameters' do
+    client.text_request 'Hello', :resetContexts => true
+    response = client.text_request 'hello', contexts: [{ name: 'user', parameters: { first_name: 'Johnny' }}]
+    expect(response[:result][:contexts]).not_to be_nil
+    expect(response[:result][:contexts][0][:name]).to eq 'user'
+    expect(response[:result][:contexts][0][:parameters][:first_name]).to eq 'Johnny'
+  end
+
 end

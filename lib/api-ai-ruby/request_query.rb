@@ -1,5 +1,4 @@
 require 'http'
-require 'http/form_data'
 
 module ApiAiRuby
   class RequestQuery
@@ -23,7 +22,7 @@ module ApiAiRuby
 
     # @return [Array, Hash]
     def perform
-      options_key = @request_method == :get ? :params : :form
+      options_key = @options.has_key?(:voiceData) ? :form : :json
       response = HTTP.with(@headers).public_send(@request_method, @uri.to_s, options_key => @options)
       response_body = symbolize_keys!(response.parse)
       response_headers = response.headers
