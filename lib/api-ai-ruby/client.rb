@@ -1,16 +1,23 @@
+require 'securerandom'
+
 module ApiAiRuby
   class Client
     attr_accessor :client_access_token, :subscription_key
-    attr_writer :user_agent, :api_version, :api_lang, :api_base_url
+    attr_writer :user_agent, :api_version, :api_lang, :api_base_url, :api_session_id
 
     # Initializes a new Client object
     #
     # @param options [Hash]
-    # @return [Twitter::Client]
+    # @return [ApiAiRuby::Client]
     def initialize(options = {})
       options.each do |key, value|
         instance_variable_set("@#{key}", value)
       end
+
+      if !(options.key?  :api_session_id)
+        @api_session_id = SecureRandom.uuid
+      end
+
       yield(self) if block_given?
     end
 
@@ -29,6 +36,10 @@ module ApiAiRuby
 
     def api_version
       @api_version ||= ApiAiRuby::Constants::DEFAULT_API_VERSION
+    end
+
+    def api_session_id
+      @api_session_id
     end
 
     # @return [Hash]
@@ -53,6 +64,19 @@ module ApiAiRuby
       raise ApiAiRuby::ClientError.new('Credentials missing') if !credentials?
       options[:file] = file_stream
       ApiAiRuby::VoiceRequest.new(self, options).perform
+    end
+
+    # @param entity_name [String]
+    # @param entries [ApiAiRuby:Entry[]]
+    # @param options [Hash]
+    def user_entities_request(entity_name, entries, options = {})
+      raise ApiAiRuby::ClientError.new('Entity name required') if entity_name.nil?
+      raise ApiAiRuby::ClientError.new('Entity entries array required') if !entries.nil? && entries.is_a?(Array)
+      # raise ApiAiRuby::ClientError.new('Entity name required') if !(options.has_key?(:entries) && options[:entries].is_a?(Array))
+      options[:name] = entity_name
+      options[:entries] = entries
+      options[:extend] = options[:extend] || false
+      ApiAiRuby::UserEntitiesRequest.new(self, options).perform
     end
 
   end

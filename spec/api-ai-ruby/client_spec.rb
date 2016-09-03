@@ -38,13 +38,23 @@ describe ApiAiRuby::Client do
       expect(client.api_base_url).to eq ApiAiRuby::Constants::DEFAULT_BASE_URL
       expect(client.api_version).to eq ApiAiRuby::Constants::DEFAULT_API_VERSION
       expect(client.api_lang).to eq ApiAiRuby::Constants::DEFAULT_CLIENT_LANG
+      expect(client.api_session_id).to be_a(String)
     end
 
     it 'correctly creates client with given properties' do
-      client = ApiAiRuby::Client.new(subscription_key: 'SK', client_access_token: 'CS', api_lang: 'RU', api_base_url: 'http://localhost', api_version: '1234')
+      client = ApiAiRuby::Client.new(
+          subscription_key: 'SK',
+          client_access_token: 'CS',
+          api_lang: 'RU',
+          api_base_url: 'http://localhost',
+          api_version: '1234',
+          api_session_id: '555'
+      )
+
       expect(client.api_base_url).to eq 'http://localhost'
       expect(client.api_version).to eq '1234'
       expect(client.api_lang).to eq 'RU'
+      expect(client.api_session_id).to eq '555'
     end
 
 

@@ -44,4 +44,29 @@ describe 'api' do
     expect(response[:result][:contexts][0][:parameters][:first_name]).to eq 'Johnny'
   end
 
+  it 'should use custom entities' do
+    response = client.text_request 'hi nori', entities: [
+        {
+            name: 'dwarfs',
+            entries: [
+                ApiAiRuby::Entry.new('Ori', %w(ori Nori)),
+                {value: 'bifur', synonyms: %w(Bofur Bombur)}
+            ]
+        }
+    ]
+
+    expect(response[:result][:action]).to eq 'say_hi'
+    expect(response[:result][:fulfillment][:speech]). to eq 'hi Bilbo, I am Ori'
+  end
+
+  it 'should use custom entities through separate request' do
+    entry = ApiAiRuby::Entry.new 'giur', %w(Giur Amaldur)
+    client.user_entities_request('dwarfs', [entry])
+
+    response = client.text_request 'hi Amaldur'
+    expect(response[:result][:action]).to eq 'say_hi'
+    expect(response[:result][:fulfillment][:speech]). to eq 'hi Bilbo, I am giur'
+
+  end
+
 end

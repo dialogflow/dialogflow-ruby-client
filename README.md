@@ -1,5 +1,7 @@
 # The API.AI ruby gem
 
+[![Gem Version](https://badge.fury.io/rb/api-ai-ruby.svg)](https://badge.fury.io/rb/api-ai-ruby)
+
 A Ruby SDK to the https://api.ai natural language processing service.
 
 ## Installation
@@ -62,7 +64,8 @@ ApiAiRuby::Client.new(
     client_access_token: 'YOUR_ACCESS_TOKEN',
     api_lang: 'FR',
     api_base_url: 'http://example.com/v1/',
-    api_version: 'YYYYMMDD'
+    api_version: 'YYYYMMDD',
+    api_session_id: 'some_uuid_or_whatever'
 )
 ```
 
@@ -72,6 +75,47 @@ And you also can send additional data to server during request, use second param
     response = client.text_request 'Hello', :contexts => ['firstContext'], :resetContexts => true
     response = client.voice_request file, :timezone => "America/New_York"
 ```
+
+Another possibility is to send [custom entities](https://docs.api.ai/docs/userentities) to the server.
+
+You can do it along with **query** request
+```ruby
+    client.text_request 'call Mozart', entities: [
+        {
+            name: 'contacts',
+            entries: [
+                ApiAiRuby::Entry.new('Mozart', %w(Mozart Wolfgang)),
+                ApiAiRuby::Entry.new('Salieri', %w(Salieri Antonio))
+            ]
+        }
+    ]
+    
+    # the same without ApiAiRuby::Entry wrapper
+    
+    client.text_request 'call Mozart', entities: [
+        {
+            name: 'contacts',
+            entries: [
+                {value: 'Mozart', synonyms: %w(Mozart Wolfgang))},
+                {value: 'Salieri', synonyms: %w(Salieri Antonio))},
+            ]
+        }
+    ]
+     
+```
+
+Or with separate **user_entities_request** call
+```ruby
+
+    entries = [
+        ApiAiRuby::Entry.new('Mozart', %w(Mozart Wolfgang)),
+        ApiAiRuby::Entry.new('Salieri', %w(Salieri Antonio))
+    ]
+    
+    client.user_entities_request('contacts', [entry1, entry2])
+    client.text_request 'call Mozart'
+```
+
 More information about possible parameters can be found at https://docs.api.ai/docs/query page
 
 #Error handling
@@ -80,6 +124,7 @@ More information about possible parameters can be found at https://docs.api.ai/d
 
 #Changelog
 
+* 1.2.0 - added configurable session_id and separate user_entities (post) request
 * 1.1.4 - removed unused dependency and updated default API version 
 * 1.1.3 - fixed non-correctly serialized parameters in new contexts during query send process
 * 1.1.2 - fixed compatibility with ruby version less then 2.1.6

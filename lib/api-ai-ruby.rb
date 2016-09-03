@@ -5,4 +5,6 @@ require 'api-ai-ruby/client_error'
 require 'api-ai-ruby/request_query'
 require 'api-ai-ruby/text_request'
 require 'api-ai-ruby/voice_request'
+require 'api-ai-ruby/entry'
+require 'api-ai-ruby/user_entity_request'
 
