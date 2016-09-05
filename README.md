@@ -84,27 +84,27 @@ Another possibility is to send and retrieve [custom entities](https://docs.api.a
 
 You can do it along with **query** request
 ```ruby
-    client.text_request 'call Mozart', entities: [
-        {
-            name: 'contacts',
-            entries: [
-                ApiAiRuby::Entry.new('Mozart', %w(Mozart Wolfgang)),
-                ApiAiRuby::Entry.new('Salieri', %w(Salieri Antonio))
-            ]
-        }
-    ]
-    
-    # the same without ApiAiRuby::Entry wrapper
-    
-    client.text_request 'call Mozart', entities: [
-        {
-            name: 'contacts',
-            entries: [
-                {value: 'Mozart', synonyms: %w(Mozart Wolfgang))},
-                {value: 'Salieri', synonyms: %w(Salieri Antonio))},
-            ]
-        }
-    ]
+client.text_request 'call Mozart', entities: [
+    {
+        name: 'contacts',
+        entries: [
+            ApiAiRuby::Entry.new('Mozart', %w(Mozart Wolfgang)),
+            ApiAiRuby::Entry.new('Salieri', %w(Salieri Antonio))
+        ]
+    }
+]
+
+# the same without ApiAiRuby::Entry wrapper
+
+client.text_request 'call Mozart', entities: [
+    {
+        name: 'contacts',
+        entries: [
+            {value: 'Mozart', synonyms: %w(Mozart Wolfgang))},
+            {value: 'Salieri', synonyms: %w(Salieri Antonio))},
+        ]
+    }
+]
      
 ```
 
@@ -112,33 +112,33 @@ Or with separate **user_entities_request** object with full CRUD support:
 
 ```ruby
 
-    # preparations
-    entries_composers = [
-        ApiAiRuby::Entry.new('Mozart', %w(Mozart Wolfgang)),
-        ApiAiRuby::Entry.new('Salieri', %w(Salieri Antonio))
-    ]
-    
-    entries_unknown = [
-        ApiAiRuby::Entry.new('John Doe', %w(John Unknown)),
-        ApiAiRuby::Entry.new('Jane Doe', %w(Jane))
-    ]
-    
-    entity_contacts = ApiAiRuby::Entity.new('contacts', [entries_composers])
-    
-    # let's go
-    uer = client.user_entities_request
-    uer.create(contacts) # or uer.create([entity1, entity2...])
-    
-    client.text_request 'call Mozart' # will work
-    
-    uer.update('contacts', entries_unknown)
-    
-    client.text_request 'call Mozart' # will NOT work
-    client.text_request 'call John' # will work
-   
-    uer.retrieve('contacts') # will return current state of user entity
-    uer.delete('contacts') # will remove user entities for given session    
-           
+# preparations
+entries_composers = [
+    ApiAiRuby::Entry.new('Mozart', %w(Mozart Wolfgang)),
+    ApiAiRuby::Entry.new('Salieri', %w(Salieri Antonio))
+]
+
+entries_unknown = [
+    ApiAiRuby::Entry.new('John Doe', %w(John Unknown)),
+    ApiAiRuby::Entry.new('Jane Doe', %w(Jane))
+]
+
+entity_contacts = ApiAiRuby::Entity.new('contacts', [entries_composers])
+
+# let's go
+uer = client.user_entities_request
+uer.create(contacts) # or uer.create([entity1, entity2...])
+
+client.text_request 'call Mozart' # will work
+
+uer.update('contacts', entries_unknown)
+
+client.text_request 'call Mozart' # will NOT work
+client.text_request 'call John' # will work
+
+uer.retrieve('contacts') # will return current state of user entity
+uer.delete('contacts') # will remove user entities for given session    
+       
 ```
 
 
