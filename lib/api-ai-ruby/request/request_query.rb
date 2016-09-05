@@ -13,7 +13,6 @@ module ApiAiRuby
       @client = client
       @uri = client.api_base_url + 'query?v=' + client.api_version
       @request_method = :post
-      options[:lang] = client.api_lang
       options[:sessionId] = client.api_session_id
       @options = options
       @headers = {
@@ -23,7 +22,13 @@ module ApiAiRuby
 
     # @return [Array, Hash]
     def perform
-      options_key = @options.has_key?(:voiceData) ? :form : :json
+
+      if @options.has_key?(:voiceData)
+        options_key = :form
+      else
+        options_key = (@request_method === :get) ? :params : :json
+      end
+
       response = HTTP.with(@headers).public_send(@request_method, @uri.to_s, options_key => @options)
       response_body = symbolize_keys!(response.parse)
       response_headers = response.headers

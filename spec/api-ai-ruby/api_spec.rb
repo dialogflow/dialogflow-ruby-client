@@ -58,7 +58,7 @@ describe 'api' do
     expect(response[:result][:action]).to eq 'say_hi'
     expect(response[:result][:fulfillment][:speech]). to eq 'hi Bilbo, I am Ori'
   end
-
+=begin
   it 'should use custom entities through separate request' do
     entry = ApiAiRuby::Entry.new 'giur', %w(Giur Amaldur)
     client.user_entities_request('dwarfs', [entry])
@@ -69,4 +69,23 @@ describe 'api' do
 
   end
 
+  it 'should use custom entities through separate request' do
+
+    entity1 = ApiAiRuby::Entity.new 'dwarfs', [
+        ApiAiRuby::Entry.new('test1', %w(test1 test_1)),
+        ApiAiRuby::Entry.new('test2', %w(test2 test_2))
+    ]
+
+    entity2 = ApiAiRuby::Entity.new 'dwarfs', [
+        ApiAiRuby::Entry.new('test1', %w(test1 test_1)),
+        ApiAiRuby::Entry.new('test2', %w(test2 test_2))
+    ]
+
+    uer = client.user_entities_request
+    #response = uer.create([entity1, entity2])
+    response = uer.create(entity1)
+    response = uer.retrieve('dwarfs')
+    puts(response)
+
+=end
 end

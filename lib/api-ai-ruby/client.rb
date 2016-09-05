@@ -69,14 +69,16 @@ module ApiAiRuby
     # @param entity_name [String]
     # @param entries [ApiAiRuby:Entry[]]
     # @param options [Hash]
-    def user_entities_request(entity_name, entries, options = {})
-      raise ApiAiRuby::ClientError.new('Entity name required') if entity_name.nil?
-      raise ApiAiRuby::ClientError.new('Entity entries array required') if !entries.nil? && entries.is_a?(Array)
+
+    def user_entities_request #entity_name, entries, options = {}
+      ApiAiRuby::UserEntitiesRequest.new(self);
+      # raise ApiAiRuby::ClientError.new('Entity name required') if entity_name.nil?
+      # raise ApiAiRuby::ClientError.new('Entity entries array required') if !entries.nil? && entries.is_a?(Array)
       # raise ApiAiRuby::ClientError.new('Entity name required') if !(options.has_key?(:entries) && options[:entries].is_a?(Array))
-      options[:name] = entity_name
-      options[:entries] = entries
-      options[:extend] = options[:extend] || false
-      ApiAiRuby::UserEntitiesRequest.new(self, options).perform
+      # options[:name] = entity_name
+      # options[:entries] = entries
+      # options[:extend] = options[:extend] || false
+      # ApiAiRuby::UserEntitiesRequest.new(self, options).perform
     end
 
   end

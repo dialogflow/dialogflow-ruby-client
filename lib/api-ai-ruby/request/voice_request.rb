@@ -8,8 +8,8 @@ module ApiAiRuby
     # @param options [Hash]
     # @return [ApiAiRuby::VoiceRequest]
     def initialize(client,  options = {})
+      options[:lang] = client.api_lang
       super client, options
-
       file = options.delete(:file)
       options = {
           :request => options.to_json,
