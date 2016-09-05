@@ -40,7 +40,7 @@ module ApiAiRuby
 
     def fail_or_return_response_body(code, body)
       error = false
-      if code != 200 || body[:status][:code] != 200
+      if code != 200 || (body[:status] && body[:status][:code] && body[:status][:code] != 200)
         error = ApiAiRuby::RequestError.new body[:status][:errorDetails], body[:status][:code]
       end
       fail(error) if error

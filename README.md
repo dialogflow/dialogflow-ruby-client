@@ -76,7 +76,11 @@ And you also can send additional data to server during request, use second param
     response = client.voice_request file, :timezone => "America/New_York"
 ```
 
-Another possibility is to send [custom entities](https://docs.api.ai/docs/userentities) to the server.
+More information about possible parameters can be found at https://docs.api.ai/docs/query page
+
+## User Entities
+
+Another possibility is to send and retrieve [custom entities](https://docs.api.ai/docs/userentities) to the server.
 
 You can do it along with **query** request
 ```ruby
@@ -104,19 +108,39 @@ You can do it along with **query** request
      
 ```
 
-Or with separate **user_entities_request** call
+Or with separate **user_entities_request** object with full CRUD support:
+
 ```ruby
 
-    entries = [
+    # preparations
+    entries_composers = [
         ApiAiRuby::Entry.new('Mozart', %w(Mozart Wolfgang)),
         ApiAiRuby::Entry.new('Salieri', %w(Salieri Antonio))
     ]
     
-    client.user_entities_request('contacts', [entry1, entry2])
-    client.text_request 'call Mozart'
+    entries_unknown = [
+        ApiAiRuby::Entry.new('John Doe', %w(John Unknown)),
+        ApiAiRuby::Entry.new('Jane Doe', %w(Jane))
+    ]
+    
+    entity_contacts = ApiAiRuby::Entity.new('contacts', [entries_composers])
+    
+    # let's go
+    uer = client.user_entities_request
+    uer.create(contacts) # or uer.create([entity1, entity2...])
+    
+    client.text_request 'call Mozart' # will work
+    
+    uer.update('contacts', entries_unknown)
+    
+    client.text_request 'call Mozart' # will NOT work
+    client.text_request 'call John' # will work
+   
+    uer.retrieve('contacts') # will return current state of user entity
+    uer.delete('contacts') # will remove user entities for given session    
+           
 ```
 
-More information about possible parameters can be found at https://docs.api.ai/docs/query page
 
 #Error handling
 **ApiAiRuby::Client** currently able to raise two kind of errors: **ApiAiRuby::ClientError** (due to configuration mismatch) and **ApiAiRuby::RequestError** in case of something goes wrong during request. For both kind of errors you can get **error.message** (as usual) and **ApiAiRuby::RequestError** can additionally give you code of server error (you can get it with **error.code**)
