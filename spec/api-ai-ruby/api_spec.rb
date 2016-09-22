@@ -12,6 +12,10 @@ describe 'api' do
     expect(response[:result][:action]).to eq 'greeting'
   end
 
+  it 'should correct work with utf-8 entities' do
+    response = @client.text_request '你好'
+    expect(response[:result][:resolvedQuery]).to eq '你好'
+  end
   it 'should use input contexts' do
     response = @client.text_request 'Hello', :resetContexts => true
     expect(response[:result][:action]).to eq 'greeting'
@@ -36,7 +40,9 @@ describe 'api' do
   end
 
   it 'should send voiceData to API' do
-    expect(@client.voice_request(File.new(fixture_path + '/hello.wav'))[:result][:resolvedQuery]).to eq 'hello'
+    # expect(@client.voice_request(File.new(fixture_path + '/hello.wav'))[:result][:resolvedQuery]).to eq 'hello'
+    # asr was disabled for non-premium users
+    expect {@client.voice_request(File.new(fixture_path + '/hello.wav'))}.to raise_error(ApiAiRuby::RequestError)
   end
 
   it 'should correctly set contexts with parameters' do
@@ -98,8 +104,5 @@ describe 'api' do
       @uer.delete('dwarfs')
       expect{@uer.retrieve('dwarfs')}.to raise_error(ApiAiRuby::RequestError)
     end
-
   end
-
-
 end

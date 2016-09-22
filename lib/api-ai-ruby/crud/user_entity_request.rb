@@ -3,6 +3,7 @@ module ApiAiRuby
 
     def initialize(client,  options = {})
       super client, options
+      @headers['Content-Type'] = 'application/json; charset=UTF-8'
       @crud_base_uri = client.api_base_url + 'userEntities'
       @uri = @crud_base_uri
     end

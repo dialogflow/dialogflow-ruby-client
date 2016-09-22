@@ -148,6 +148,7 @@ uer.delete('contacts') # will remove user entities for given session
 
 #Changelog
 
+* 1.2.1 - fixed UTF-8 in text-requests
 * 1.2.0 - added configurable session_id and full userEntities support
 * 1.1.4 - removed unused dependency and updated default API version 
 * 1.1.3 - fixed non-correctly serialized parameters in new contexts during query send process
