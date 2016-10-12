@@ -3,7 +3,7 @@ require 'http'
 module ApiAiRuby
   class RequestQuery
 
-    attr_accessor :client, :headers, :options,  :request_method, :uri
+    attr_accessor :client, :headers, :options, :request_method, :uri
 
     # @param client [ApiAiRuby::Client]
     # @param options [Hash]
@@ -18,20 +18,21 @@ module ApiAiRuby
       @headers = {
           Authorization: 'Bearer ' + client.client_access_token,
       }
+      @timeout_options = client.timeout_options || options[:timeout_options]
     end
 
     # @return [Array, Hash]
     def perform
-
       if @options.has_key?(:voiceData)
         options_key = :form
       else
         options_key = (@request_method === :get) ? :params : :json
       end
 
-      response = HTTP.with(@headers).public_send(@request_method, @uri.to_s, options_key => @options)
+      request = HTTP.with(@headers)
+      request = request.timeout(*@timeout_options) if @timeout_options
+      response = request.public_send(@request_method, @uri.to_s, options_key => @options)
       response_body = symbolize_keys!(response.parse)
-      response_headers = response.headers
       fail_or_return_response_body(response.code, response_body)
     end
 

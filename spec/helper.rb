@@ -12,9 +12,10 @@ end
 
 require 'api-ai-ruby'
 require 'rspec'
-#require 'webmock/rspec'
+require 'webmock'
+require 'webmock/rspec'
 
-#WebMock.disable_net_connect!(allow: 'coveralls.io')
+WebMock.allow_net_connect!
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|

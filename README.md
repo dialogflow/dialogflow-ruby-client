@@ -145,6 +145,20 @@ uer.delete('contacts') # will remove user entities for given session
 #Error handling
 **ApiAiRuby::Client** currently able to raise two kind of errors: **ApiAiRuby::ClientError** (due to configuration mismatch) and **ApiAiRuby::RequestError** in case of something goes wrong during request. For both kind of errors you can get **error.message** (as usual) and **ApiAiRuby::RequestError** can additionally give you code of server error (you can get it with **error.code**)
 
+#Timeouts
+**ApiAiRuby::Client** uses the [http gem](https://github.com/httprb/http) under the hood.  You can use ```timeout_options``` on the client to set these.
+```ruby
+ApiAiRuby::Client.new(
+    client_access_token: 'YOUR_ACCESS_TOKEN',
+    api_lang: 'FR',
+    api_base_url: 'http://example.com/v1/',
+    api_version: 'YYYYMMDD',
+    api_session_id: 'some_uuid_or_whatever',
+    timeout_options: [:global, { write: 1, connect: 1, read: 1 }]
+)
+```
+
+Please see the [httprb wiki on timeouts](https://github.com/httprb/http/wiki/Timeouts) for more information.
 
 #Changelog
 

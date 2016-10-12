@@ -48,13 +48,15 @@ describe ApiAiRuby::Client do
           api_lang: 'RU',
           api_base_url: 'http://localhost',
           api_version: '1234',
-          api_session_id: '555'
+          api_session_id: '555',
+          timeout_options: [:global, { write: 1, connect: 1, read: 1}]
       )
 
       expect(client.api_base_url).to eq 'http://localhost'
       expect(client.api_version).to eq '1234'
       expect(client.api_lang).to eq 'RU'
       expect(client.api_session_id).to eq '555'
+      expect(client.timeout_options).to eq [:global, { write: 1, connect: 1, read: 1}]
     end
 
 

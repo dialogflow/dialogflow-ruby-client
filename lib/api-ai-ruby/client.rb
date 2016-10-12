@@ -2,7 +2,7 @@ require 'securerandom'
 
 module ApiAiRuby
   class Client
-    attr_accessor :client_access_token, :subscription_key
+    attr_accessor :client_access_token, :subscription_key, :timeout_options
     attr_writer :user_agent, :api_version, :api_lang, :api_base_url, :api_session_id
 
     # Initializes a new Client object
