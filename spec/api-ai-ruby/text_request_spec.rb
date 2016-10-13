@@ -29,7 +29,7 @@ describe ApiAiRuby::TextRequest do
     { :id => "94613973-930f-4a53-9286-6e9efcbb5c57", :timestamp => "2016-10-12T20:07:54.876Z", :result => { :source => "domains", :resolvedQuery => "hello", :action => "smalltalk.greetings", :parameters => { :simplified => "hello" }, :metadata => {}, :fulfillment => { :speech => "Good day!" }, :score => 0.0 }, :status => { :code => 200, :errorType => "success" }, :sessionId => "555" }
   end
   let(:expected_headers) do
-    { 'Authorization' => 'Bearer CS', 'Connection' => 'close', 'Content-Type' => 'application/json; charset=UTF-8', 'Host' => 'api.api.ai', 'User-Agent' => 'http.rb/0.9.9' }
+    { 'Authorization' => 'Bearer CS', 'Connection' => 'close', 'Content-Type' => 'application/json; charset=UTF-8', 'Host' => 'api.api.ai' }
   end
   let(:expected_url) { "https://api.api.ai/v1/query?v=20150910" }
   let(:expected_body) { '{"query":"hello","lang":"EN","sessionId":"555"}' }
