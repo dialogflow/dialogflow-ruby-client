@@ -140,11 +140,6 @@ uer.retrieve('contacts') # will return current state of user entity
 uer.delete('contacts') # will remove user entities for given session    
        
 ```
-
-
-#Error handling
-**ApiAiRuby::Client** currently able to raise two kind of errors: **ApiAiRuby::ClientError** (due to configuration mismatch) and **ApiAiRuby::RequestError** in case of something goes wrong during request. For both kind of errors you can get **error.message** (as usual) and **ApiAiRuby::RequestError** can additionally give you code of server error (you can get it with **error.code**)
-
 #Timeouts
 **ApiAiRuby::Client** uses the [http gem](https://github.com/httprb/http) under the hood.  You can use ```timeout_options``` on the client to set these.
 ```ruby
@@ -160,8 +155,14 @@ ApiAiRuby::Client.new(
 
 Please see the [httprb wiki on timeouts](https://github.com/httprb/http/wiki/Timeouts) for more information.
 
+
+#Error handling
+**ApiAiRuby::Client** currently able to raise two kind of errors: **ApiAiRuby::ClientError** (due to configuration mismatch) and **ApiAiRuby::RequestError** in case of something goes wrong during request. For both kind of errors you can get **error.message** (as usual) and **ApiAiRuby::RequestError** can additionally give you code of server error (you can get it with **error.code**)
+
+
 #Changelog
 
+* 1.2.2 - added configurable timeouts for requests (thanks [bramski](https://github.com/bramski))
 * 1.2.1 - fixed UTF-8 in text-requests
 * 1.2.0 - added configurable session_id and full userEntities support
 * 1.1.4 - removed unused dependency and updated default API version 
