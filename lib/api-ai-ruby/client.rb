@@ -59,6 +59,18 @@ module ApiAiRuby
       ApiAiRuby::TextRequest.new(self, options).perform
     end
 
+    # @param event_name [String]
+    # @param data [Object]
+    # @param options [Object]
+    def event_request (event_name = '', data = {}, options = {})
+      raise ApiAiRuby::ClientError.new('Credentials missing') if !credentials?
+      options[:event] = {
+          name: event_name,
+          data: data
+      }
+      ApiAiRuby::EventRequest.new(self, options).perform
+    end
+
     def voice_request(file_stream, options = {})
       raise ApiAiRuby::ClientError.new('Credentials missing') if !credentials?
       options[:file] = file_stream

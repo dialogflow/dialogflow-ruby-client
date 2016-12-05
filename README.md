@@ -22,35 +22,14 @@ After that you can send text requests to the https://api.ai with command
 response = client.text_request 'hello!'
 ```
 
-And voice requests with file stream
+Or try to invocate intent via defined '[event](https://docs.api.ai/docs/concept-events)':
 
 ```ruby
-file = File.new 'hello.wav'
-response = client.voice_request(file)
-```
 
-Example answer:
-```
-{
-  :id        => "6daf5ab7-276c-43ad-a32d-bf6831918492",
-  :timestamp => "2015-12-22T08:42:15.785Z",
-  :result    => {
-    :source        => "agent",
-    :resolvedQuery => "Hello",
-    :speech        => "Hi! How are you?",
-    :action        => "greeting",
-    :parameters    => {},
-    :contexts      => [],
-    :metadata      => {
-      :intentId   => "a5d685ab-1f19-46b0-9478-69f794553668",
-      :intentName => "hello"
-    }
-  },
-  :status    => {
-    :code      => 200,
-    :errorType => "success"
-  }
-}
+response_zero = client.event_request 'MY_CUSTOM_EVENT_NAME';
+response_one = client.event_request 'MY_EVENT_WITH_DATA_TO_STORE', {:param1 => 'value'}
+response_two = client.event_request 'MY_EVENT_WITH_DATA_TO_STORE', {:some_param => 'some_value'}, :resetContexts => true
+
 ```
 
 **voice_request** and **text_request** methods returns symbolized https://api.ai response. Structure of response can be found at https://docs.api.ai/docs/query#response.
@@ -73,7 +52,7 @@ And you also can send additional data to server during request, use second param
 
 ```ruby
     response = client.text_request 'Hello', :contexts => ['firstContext'], :resetContexts => true
-    response = client.voice_request file, :timezone => "America/New_York"
+    response = client.voice_request file, :timezone => 'America/New_York'
 ```
 
 More information about possible parameters can be found at https://docs.api.ai/docs/query page
@@ -162,6 +141,7 @@ Please see the [httprb wiki on timeouts](https://github.com/httprb/http/wiki/Tim
 
 #Changelog
 
+* 1.2.3 - events support
 * 1.2.2 - added configurable timeouts for requests (thanks [bramski](https://github.com/bramski))
 * 1.2.1 - fixed UTF-8 in text-requests
 * 1.2.0 - added configurable session_id and full userEntities support

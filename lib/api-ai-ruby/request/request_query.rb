@@ -7,7 +7,7 @@ module ApiAiRuby
 
     # @param client [ApiAiRuby::Client]
     # @param options [Hash]
-    # @return [ApiAiRuby::TextRequest]
+    # @return [ApiAiRuby::RequestQuery]
 
     def initialize(client, options = {})
       @client = client

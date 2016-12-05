@@ -104,5 +104,15 @@ describe 'api' do
       @uer.delete('dwarfs')
       expect{@uer.retrieve('dwarfs')}.to raise_error(ApiAiRuby::RequestError)
     end
+
+    #
+    # commented until test agent update
+    #
+    # it 'should invoke event' do
+    # response = @client.event_request 'WELCOME'
+    # expect(response[:result][:action]).to eq 'input.welcome'
+    # puts(response)
+    # end
+
   end
 end
