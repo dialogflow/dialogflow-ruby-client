@@ -176,9 +176,11 @@ Please see the [httprb wiki on timeouts](https://github.com/httprb/http/wiki/Tim
 #Changelog
 
 ##1.3.0 
+
 ###Non-breaking
 - contexts endpoint support (https://docs.api.ai/docs/contexts)
 - better RDoc
+
 ###Breaking
 - ApiAiRuby::Client::user_entities_request renamed to ApiAiRuby::Client::create_user_entities_request
 - ApiAiRuby::Entity::addEntry renamed to ApiAiRuby::Entity::add_entry
