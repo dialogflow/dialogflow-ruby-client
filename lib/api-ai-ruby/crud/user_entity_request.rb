@@ -8,7 +8,8 @@ module ApiAiRuby
       @uri = @crud_base_uri
     end
 
-
+    # @param argument [Array<ApiAiRuby::Entity, Hash>, ApiAiRuby::Entity, Hash]
+    # @return [Hash]
     def create(argument)
       if !(argument && (argument.is_a?(Array) || argument.is_a?(Hash) || argument.is_a?(ApiAiRuby::Entity)))
         raise ApiAiRuby::ClientError.new('Argument should be array of Entities or single Entity object')

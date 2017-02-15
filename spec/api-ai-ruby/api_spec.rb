@@ -1,10 +1,12 @@
 require 'helper'
 
 describe 'api' do
-  before(:all) { @client = ApiAiRuby::Client.new(
+  before(:all) {
+    @client = ApiAiRuby::Client.new(
       :client_access_token => '3485a96fb27744db83e78b8c4bc9e7b7',
       :api_session_id => 'testsession'
-  )}
+    )
+  }
 
   it 'should return response' do
     response = @client.text_request 'Hello'
@@ -40,9 +42,9 @@ describe 'api' do
   end
 
   it 'should send voiceData to API' do
-    # expect(@client.voice_request(File.new(fixture_path + '/hello.wav'))[:result][:resolvedQuery]).to eq 'hello'
+    expect(@client.voice_request(File.new(fixture_path + '/hello.wav'))[:result][:resolvedQuery]).to eq 'hello'
     # asr was disabled for non-premium users
-    expect {@client.voice_request(File.new(fixture_path + '/hello.wav'))}.to raise_error(ApiAiRuby::RequestError)
+    # expect {@client.voice_request(File.new(fixture_path + '/hello.wav'))}.to raise_error(ApiAiRuby::RequestError)
   end
 
   it 'should correctly set contexts with parameters' do
@@ -70,7 +72,7 @@ describe 'api' do
 
   describe 'userEntities endpoint' do
 
-    before(:all) { @uer = @client.user_entities_request}
+    before(:all) { @uer = @client.create_user_entities_request}
 
     let(:entity1) {
       ApiAiRuby::Entity.new 'dwarfs', [ApiAiRuby::Entry.new('giur', %w(Giur Amaldur))]
@@ -115,4 +117,40 @@ describe 'api' do
     # end
 
   end
+
+  describe 'contexts endpoint' do
+
+    before(:all) { @context_request = @client.create_contexts_request}
+
+    it 'should retrieve contexts' do
+      @client.text_request 'Hello', :contexts =>  %w(firstContext secondContext), :resetContexts => true
+      response = @context_request.list
+      expect(response[0][:name]).to eq 'secondcontext'
+      expect(response[1][:name]).to eq 'firstcontext'
+    end
+
+    it 'should retrieve contexts by name' do
+      response = @context_request.retrieve 'secondContext'
+      expect(response[:name]).to eq 'secondcontext'
+    end
+
+    it 'should delete all curret contexts' do
+      @context_request.delete
+      expect(@context_request.list.length).to be 0
+    end
+
+    it 'should create context via crud' do
+      @context_request.create('test')
+      @context_request.create(ApiAiRuby::Context.new('test1'))
+      @context_request.create([ApiAiRuby::Context.new('test2'), ApiAiRuby::Context.new('test3',)])
+      expect(@context_request.list.length).to be 4
+    end
+
+    it 'should delete context by name' do
+      @context_request.delete('test3')
+      expect(@context_request.list.length).to be 3
+    end
+
+  end
+
 end

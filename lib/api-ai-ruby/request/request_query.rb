@@ -21,9 +21,9 @@ module ApiAiRuby
       @timeout_options = client.timeout_options || options[:timeout_options]
     end
 
-    # @return [Array, Hash]
+    # @return [Hash]
     def perform
-      if @options.has_key?(:voiceData)
+      if @options && @options.is_a?(Hash) && @options.has_key?(:voiceData)
         options_key = :form
       else
         options_key = (@request_method === :get) ? :params : :json
@@ -31,17 +31,17 @@ module ApiAiRuby
 
       request = HTTP.with(@headers)
       request = request.timeout(*@timeout_options) if @timeout_options
-      response = request.public_send(@request_method, @uri.to_s, options_key => @options)
+      response = request.public_send(@request_method, @uri.to_s, options_key => @options) if @options
+      response = request.public_send(@request_method, @uri.to_s) if @options == nil
       response_body = symbolize_keys!(response.parse)
       fail_or_return_response_body(response.code, response_body)
     end
 
     private
 
-
     def fail_or_return_response_body(code, body)
       error = false
-      if code != 200 || (body[:status] && body[:status][:code] && body[:status][:code] != 200)
+      if code != 200 || (body.is_a?(Hash) && body[:status] && body[:status][:code] && body[:status][:code] != 200)
         error = ApiAiRuby::RequestError.new body[:status][:errorDetails], body[:status][:code]
       end
       fail(error) if error

@@ -79,15 +79,15 @@ client.text_request 'call Mozart', entities: [
     {
         name: 'contacts',
         entries: [
-            {value: 'Mozart', synonyms: %w(Mozart Wolfgang))},
-            {value: 'Salieri', synonyms: %w(Salieri Antonio))},
+            {value: 'Mozart', synonyms: %w(Mozart Wolfgang)},
+            {value: 'Salieri', synonyms: %w(Salieri Antonio)}
         ]
     }
 ]
      
 ```
 
-Or with separate **user_entities_request** object with full CRUD support:
+Or with separate **create_user_entities_request** object with full CRUD support:
 
 ```ruby
 
@@ -105,7 +105,7 @@ entries_unknown = [
 entity_contacts = ApiAiRuby::Entity.new('contacts', [entries_composers])
 
 # let's go
-uer = client.user_entities_request
+uer = client.create_user_entities_request
 uer.create(contacts) # or uer.create([entity1, entity2...])
 
 client.text_request 'call Mozart' # will work
@@ -119,6 +119,40 @@ uer.retrieve('contacts') # will return current state of user entity
 uer.delete('contacts') # will remove user entities for given session    
        
 ```
+## Context
+Also SDK has full support of [contexts](https://docs.api.ai/docs/contexts) API.AI endpoint with special object, called ```contexts_request```
+Usage is simple:
+```ruby
+
+# some preparations
+lifespan = 5
+parameters = {
+  :param_name => 'param_value'
+}
+name = 'test_context'
+
+# you can create context using built-in model ApiAiRuby::Context 
+test_context = ApiAiRuby::Context.new(name, lifespan, parameters)
+another_test_context = ApiAiRuby::Context.new('another_test_context')
+one_more_test_context = ApiAiRuby::Context.new('one_more_test_context', 4)
+
+# ok, we are ready
+
+context_request = @client.create_contexts_request
+
+# there are different options to be used with .create
+
+context_request.create(test_context)
+context_request.create([another_test_context, one_more_test_context])
+context_request.create('one_more_super_final_mega_context')
+
+context_request.retrieve('test_context') # will return you single context or nothing
+context_request.list() # will return you list of all contexts used in current session
+context_request.delete('test_context') # will remove single context
+context_request.delete() # will remove all context in session
+
+```
+
 #Timeouts
 **ApiAiRuby::Client** uses the [http gem](https://github.com/httprb/http) under the hood.  You can use ```timeout_options``` on the client to set these.
 ```ruby
@@ -141,6 +175,15 @@ Please see the [httprb wiki on timeouts](https://github.com/httprb/http/wiki/Tim
 
 #Changelog
 
+##1.3.0 
+###Non-breaking
+- contexts endpoint support (https://docs.api.ai/docs/contexts)
+- better RDoc
+###Breaking
+- ApiAiRuby::Client::user_entities_request renamed to ApiAiRuby::Client::create_user_entities_request
+- ApiAiRuby::Entity::addEntry renamed to ApiAiRuby::Entity::add_entry
+
+##Previous
 * 1.2.3 - events support
 * 1.2.2 - added configurable timeouts for requests (thanks [bramski](https://github.com/bramski))
 * 1.2.1 - fixed UTF-8 in text-requests

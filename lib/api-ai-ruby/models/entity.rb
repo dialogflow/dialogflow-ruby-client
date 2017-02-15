@@ -3,7 +3,7 @@ module ApiAiRuby
     attr_accessor :name, :entries
 
     # @param name [String]
-    # @param entries [Array]
+    # @param entries [Array<ApiAiRuby::Entry, Hash>]
     def initialize (name, entries)
       @name = name
       @entries = entries
@@ -16,7 +16,7 @@ module ApiAiRuby
       }.to_json(*args)
     end
 
-    def addEntry(value, synonyms)
+    def add_entry(value, synonyms)
       @entries.push new ApiAiRuby::Entry(value, synonyms)
     end
 
