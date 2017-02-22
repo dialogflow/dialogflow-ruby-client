@@ -175,13 +175,17 @@ Please see the [httprb wiki on timeouts](https://github.com/httprb/http/wiki/Tim
 
 #Changelog
 
+##2.0.0
+###Breaking:
+- http gem dependency updated to 2.0, it does no longer raise `Errno::ETIMEDOUT`. Thanks to @tak1n
+
 ##1.3.0 
 
-###Non-breaking
+###Non-breaking:
 - contexts endpoint support (https://docs.api.ai/docs/contexts)
 - better RDoc
 
-###Breaking
+###Breaking:
 - ApiAiRuby::Client::user_entities_request renamed to ApiAiRuby::Client::create_user_entities_request
 - ApiAiRuby::Entity::addEntry renamed to ApiAiRuby::Entity::add_entry
 
