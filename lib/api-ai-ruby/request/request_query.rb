@@ -29,7 +29,7 @@ module ApiAiRuby
         options_key = (@request_method === :get) ? :params : :json
       end
 
-      request = HTTP.with(@headers)
+      request = HTTP.headers(@headers)
       request = request.timeout(*@timeout_options) if @timeout_options
       response = request.public_send(@request_method, @uri.to_s, options_key => @options) if @options
       response = request.public_send(@request_method, @uri.to_s) if @options == nil

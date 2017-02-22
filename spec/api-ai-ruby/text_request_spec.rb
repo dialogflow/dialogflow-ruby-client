@@ -51,7 +51,7 @@ describe ApiAiRuby::TextRequest do
                :headers => expected_headers).to_timeout
         expect {
           subject.perform
-        }.to raise_error(Errno::ETIMEDOUT)
+        }.to raise_error(HTTP::ConnectionError)
         expect(stub).to have_been_requested
       end
     end
