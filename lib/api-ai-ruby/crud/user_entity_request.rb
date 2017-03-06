@@ -5,8 +5,7 @@ module ApiAiRuby
       super client, options
       @headers['Content-Type'] = 'application/json; charset=UTF-8'
       @crud_base_uri = client.api_base_url +
-        (options[:uriPath] ? options[:uriPath] : 'userEntities')
-      @uri = @crud_base_uri
+        (options[:uri_path] ? options[:uri_path] : 'userEntities')
     end
 
     # @param argument [Array<ApiAiRuby::Entity, Hash>, ApiAiRuby::Entity, Hash]
