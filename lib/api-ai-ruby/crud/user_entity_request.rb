@@ -46,6 +46,20 @@ module ApiAiRuby
       response
     end
 
+    def add_entries(name, entries)
+      raise ApiAiRuby::ClientError.new('Entity name required') if !name
+
+      @options = entries
+
+      @request_method = :post
+      @uri = @crud_base_uri + '/' + name + '/entries'
+      response = self.perform
+      @options.delete(:extend)
+      @options.delete(:name)
+      @options.delete(:entries)
+      response
+    end
+
     def delete(name)
       raise ApiAiRuby::ClientError.new('Entity name required') if !name
       @request_method = :delete
