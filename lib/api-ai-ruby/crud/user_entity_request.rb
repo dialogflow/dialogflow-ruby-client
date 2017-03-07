@@ -16,9 +16,23 @@ module ApiAiRuby
       end
       @uri = @crud_base_uri
       @request_method = :post
-      @options[:entities] = argument.is_a?(Array) ? argument : [argument]
-      response = self.perform
-      @options.delete(:entities)
+
+      old_options = nil
+
+      begin
+        if argument.is_a?(ApiAiRuby::Entity)
+          old_options = @options
+          @options = argument
+        else
+          @options[:entities] = argument.is_a?(Array) ? argument : [argument]
+        end
+
+        response = self.perform
+
+        @options.delete(:entities) if @options.respond_to? :delete
+      rescue
+        @options = old_options || @options
+      end
       response
     end
 
