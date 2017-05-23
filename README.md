@@ -153,7 +153,7 @@ context_request.delete() # will remove all context in session
 
 ```
 
-#Timeouts
+# Timeouts
 **ApiAiRuby::Client** uses the [http gem](https://github.com/httprb/http) under the hood.  You can use ```timeout_options``` on the client to set these.
 ```ruby
 ApiAiRuby::Client.new(
@@ -169,27 +169,27 @@ ApiAiRuby::Client.new(
 Please see the [httprb wiki on timeouts](https://github.com/httprb/http/wiki/Timeouts) for more information.
 
 
-#Error handling
+# Error handling
 **ApiAiRuby::Client** currently able to raise two kind of errors: **ApiAiRuby::ClientError** (due to configuration mismatch) and **ApiAiRuby::RequestError** in case of something goes wrong during request. For both kind of errors you can get **error.message** (as usual) and **ApiAiRuby::RequestError** can additionally give you code of server error (you can get it with **error.code**)
 
 
-#Changelog
+# Changelog
 
-##2.0.0
-###Breaking:
+## 2.0.0
+### Breaking:
 - http gem dependency updated to 2.0, it does no longer raise `Errno::ETIMEDOUT`. Thanks to @tak1n
 
-##1.3.0
+## 1.3.0 
 
-###Non-breaking:
+### Non-breaking:
 - contexts endpoint support (https://docs.api.ai/docs/contexts)
 - better RDoc
 
-###Breaking:
+### Breaking:
 - ApiAiRuby::Client::user_entities_request renamed to ApiAiRuby::Client::create_user_entities_request
 - ApiAiRuby::Entity::addEntry renamed to ApiAiRuby::Entity::add_entry
 
-##Previous
+## Previous
 * 1.2.3 - events support
 * 1.2.2 - added configurable timeouts for requests (thanks [bramski](https://github.com/bramski))
 * 1.2.1 - fixed UTF-8 in text-requests
