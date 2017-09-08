@@ -25,3 +25,6 @@ require 'api-ai-ruby/models/entry'
 require 'api-ai-ruby/models/entity'
 require 'api-ai-ruby/crud/contexts_request'
 require 'api-ai-ruby/crud/user_entity_request'
+
+module ApiAiRuby
+end
